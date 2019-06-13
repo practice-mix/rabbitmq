@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+
+    <property name="LOW_CON_LOGGER" value="lowConLogger"/>
+    <property name="HIGH_CON_LOGGER" value="highConLogger"/>
+    <property name="LOGGER_DIR" value="logs"/>
+    <appender name="appender_${LOW_CON_LOGGER}" class="ch.qos.logback.core.FileAppender">
+        <file>${LOGGER_DIR}/${LOW_CON_LOGGER}.log</file>
+
+        <encoder>
+            <pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
+        </encoder>
+    </appender>
+    <logger name="${LOW_CON_LOGGER}" level="INFO" additivity="false">
+        <appender-ref ref="appender_${LOW_CON_LOGGER}"/>
+    </logger>
+
+
+    <appender name="appender_${HIGH_CON_LOGGER}" class="ch.qos.logback.core.FileAppender">
+        <file>${LOGGER_DIR}/${HIGH_CON_LOGGER}.log</file>
+
+        <encoder>
+            <pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
+        </encoder>
+    </appender>
+    <logger name="${HIGH_CON_LOGGER}" level="INFO" additivity="false">
+        <appender-ref ref="appender_${HIGH_CON_LOGGER}"/>
+    </logger>
+
+
+</configuration>

@@ -1,0 +1,116 @@
+spring:
+  application:
+    name: lecture-rabbitmq-consumer
+  profiles:
+#    active: default
+#    active: topic
+    active: direct
+#    active: fanout
+    #    active: deadLettering
+#    active: requeue
+  #    active: overflow
+  rabbitmq:
+#    addresses: 18.208.195.248:5672,52.90.73.100:5672,54.85.214.136:5672
+    host: dev.ufotosoft.com
+#    host: 18.208.195.248
+#    host: rabbitmq.ufotosoft.com
+#    port: 5673
+    port: 5672
+    virtual-host: vh_social
+    username: social
+    password: social123
+    requested-heartbeat: 10s
+    listener:
+      type: simple
+      #      type: direct
+      simple:
+        acknowledge-mode: manual
+#        acknowledge-mode: auto
+        missing-queues-fatal: true
+        prefetch: 1 # default to 250
+        concurrency: 1
+        max-concurrency: 8
+        auto-startup: true
+        default-requeue-rejected: false
+        transaction-size: 1
+        retry:
+          enabled: false
+          max-attempts: 1
+          max-interval: 1000ms
+          initial-interval: 1000ms
+          stateless: true
+          multiplier: 1.5
+      direct:
+        acknowledge-mode: manual
+        auto-startup: true
+        consumers-per-queue: 5
+        missing-queues-fatal: true
+        default-requeue-rejected: false
+        prefetch: 250
+        retry:
+          enabled: false
+    cache:
+      channel:
+        size: 50 # tuned; need tune larger when multiple listenContainers used
+        checkout-timeout: 2s
+      connection:
+        mode: channel
+#        mode: connection
+#        size: 10
+
+app:
+  rabbit:
+    listener:
+      beanNameToListenerMap:
+        lowCon:
+          type: simple
+          simple:
+            acknowledge-mode: manual
+            missing-queues-fatal: true
+            prefetch: 1 # default to 250
+            concurrency: 1
+            max-concurrency: 1
+            auto-startup: true
+            default-requeue-rejected: false
+            transaction-size: 1
+            retry:
+              enabled: false
+              max-attempts: 1
+              max-interval: 1000ms
+              initial-interval: 1000ms
+              stateless: true
+              multiplier: 1.5
+        highCon:
+          type: simple
+          simple:
+            acknowledge-mode: manual
+            missing-queues-fatal: true
+            prefetch: 1 # default to 250
+            concurrency: 8
+            max-concurrency: 8
+            auto-startup: true
+            default-requeue-rejected: false
+            transaction-size: 1
+            retry:
+              enabled: false
+              max-attempts: 1
+              max-interval: 1000ms
+              initial-interval: 1000ms
+              stateless: true
+              multiplier: 1.5
+
+eureka:
+  client:
+    enabled: true
+    service-url:
+      defaultZone: http://dev.ufotosoft.com:8093/eureka
+  instance:
+    prefer-ip-address: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

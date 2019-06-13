@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: rabbitmq-spring-practice
+  profiles:
+#    active: beta
+    active: dev,topic
+
+logging:
+  level:
+    root: info

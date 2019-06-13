@@ -1,0 +1,7 @@
+spring:
+  rabbitmq:
+    host: 18.208.195.248
+    port: 5673
+    virtual-host: "/"
+    username: monitor
+    password: monitor123

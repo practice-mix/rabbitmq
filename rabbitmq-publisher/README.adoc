@@ -1,0 +1,10 @@
+
+
+= individual confirm and error callback
+
+com.lecture.rabbitmq.pubilsher.lec7_overflow.OverflowDemo.publisherConfirm
+
+
+= global confirm and return and recovery callback
+
+com.lecture.rabbitmq.pubilsher.config.AppRabbitConfig.configTemplateConfirm

@@ -1,0 +1,10 @@
+spring:
+  rabbitmq:
+    host: dev.ufotosoft.com
+    port: 5673
+#    virtual-host: "/"
+#    username: admin
+#    password: admin123
+    virtual-host: vh_photo
+    username: photo
+    password: photo123

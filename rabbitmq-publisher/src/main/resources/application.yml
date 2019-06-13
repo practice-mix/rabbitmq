@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: lecture-rabbitmq-publisher
+  profiles:
+#    active: default
+#    active: topic
+    active: direct
+#    active: fanout
+#    active: deadLettering
+#    active: requeue
+#    active: overflow
+  rabbitmq:
+#    addresses: rabbitmq.ufotosoft.com:5672
+#    addresses: 18.208.195.248:5672,52.90.73.100:5672,54.85.214.136:5672
+    host: dev.ufotosoft.com
+#    host: 18.208.195.248
+#    host: rabbitmq.ufotosoft.com
+#    port: 5673
+    port: 5672
+    virtual-host: vh_social
+    username: social
+    password: social123
+    publisher-confirms: true
+    publisher-returns: true
+    requested-heartbeat: 10s #default to 60s, actually as is heartbeat timeout, while heartbeat interval is  half of it
+    connection-timeout: 3s
+    dynamic: true
+    template:
+      mandatory: true
+      reply-timeout: 2s
+      retry:
+        enabled: true
+        multiplier: 1.0
+        initial-interval: 1s
+        max-interval: 5s
+        max-attempts: 2
+    cache:
+      channel:
+        # default to 25
+        size: 25
+        checkout-timeout: 2s
+      connection:
+        # connection mode is good for ELB, but do not support Automatic Declaration of Exchanges, Queues, and Bindings
+#        mode: connection
+#        size: 10
+        # channel mode support Automatic Declaration of Exchanges, Queues, and Bindings
+        mode: channel
+server:
+  port: 8081
